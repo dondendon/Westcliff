@@ -8,8 +8,7 @@ var log = {
     error:function (error) { 
         console.log('Error: ' + error);
     }
+    
 };
 
 module.exports = log
-
-//test
