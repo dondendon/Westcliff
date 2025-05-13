@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Food Blog</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <aside id="leftside"></aside>
+  <aside id="rightside"></aside>
+
+  <div id="container">
+    <%- include('partials/header') %>
+
+    <main>
+      <aside id="photos">
+        <img src="/images/chili.jpg" alt="White Chicken Chili" width="180" />
+      </aside>
+
+      <h2>Comments</h2>
+
+      <section id="blogposts">
+        <% comments.forEach(c => { %>
+          <%- include('partials/comment', c) %>
+        <% }) %>
+      </section>
+    </main>
+
+    <%- include('partials/footer') %>
+  </div>
+</body>
+</html>
