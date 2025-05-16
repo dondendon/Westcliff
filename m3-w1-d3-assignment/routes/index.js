@@ -11,13 +11,13 @@ router.get('/', function(req, res){
 	//res.render('form');
 	res.render('form', {title: 'Registration Form'});
 });
-router.get('/registrations', function(req, res) => {
+router.get('/registrations', basic.check((req, res) => {
 	Registration.find()
 	.then((registrations) => {
 	res.render('index', {title: 'Listing Registrations', registrations});
 	})
 	.catch(()=> {res.send('Sorry! Something went wrong.');});
-});
+}));
 /*
 router.post('/', function(req, res){
 	console.log(req.body);
