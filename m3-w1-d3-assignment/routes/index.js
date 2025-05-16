@@ -1,11 +1,22 @@
+const path = require('path');
+const auth = require('http-auth');
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const Registration = mongoose.model('Registration'); // This should work now
 const {check, validationResult} = require('express-validator');
 
 router.get('/', function(req, res){
 	//res.send('It works!');
 	//res.render('form');
 	res.render('form', {title: 'Registration Form'});
+});
+router.get('/registrations', function(req, res) => {
+	Registration.find()
+	.then((registrations) => {
+	res.render('index', {title: 'Listing Registrations', registrations});
+	})
+	.catch(()=> {res.send('Sorry! Something went wrong.');});
 });
 /*
 router.post('/', function(req, res){
@@ -25,7 +36,14 @@ router.post('/',
 	function(req, res){
 	const errors = validationResult(req);
 	if (errors.isEmpty()){
-		res.send('Thanks for your registration!');
+		const registration = new Registration(req.body);
+		registration.save()
+			.then(() => {res.send('Thank you for your registration!');})
+			.catch((err) => {
+				console.log(err);
+				res.send('Sorry! Something went wrong.');
+			})
+		//res.send('Thanks for your registration!');
 	}else{
 		res.render('form',{
 			title: 'Registration form',
