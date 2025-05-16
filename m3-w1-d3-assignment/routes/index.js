@@ -5,6 +5,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Registration = mongoose.model('Registration'); // This should work now
 const {check, validationResult} = require('express-validator');
+const basic = auth.basic({
+  file: path.join(__dirname, '../users.htpasswd'),
+});
 
 router.get('/', function(req, res){
 	//res.send('It works!');
@@ -18,6 +21,7 @@ router.get('/registrations', basic.check((req, res) => {
 	})
 	.catch(()=> {res.send('Sorry! Something went wrong.');});
 }));
+
 /*
 router.post('/', function(req, res){
 	console.log(req.body);
