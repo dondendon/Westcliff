@@ -1,0 +1,10 @@
+@import "reset.scss";
+
+$bckcolor: #999999;
+
+body {
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  color: red;
+  background-color: $bckcolor;
+}
