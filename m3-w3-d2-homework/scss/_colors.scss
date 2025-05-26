@@ -1,0 +1,57 @@
+// ===================================
+// COLORS.SCSS - Color Variables
+// ===================================
+
+// Primary Brand Colors
+$primary-cream: #d4c49a;
+$primary-dark-green: #6b7a5a;
+$primary-light-green: #8a9472;
+$primary-accent: #b8d632;
+
+// Text Colors
+$text-primary: #ffffff;
+$text-secondary: #4a5a3a;
+$text-dark: #333333;
+
+// Background Colors
+$bg-main: $primary-cream;
+$bg-left-section: $primary-dark-green;
+$bg-right-section: $primary-light-green;
+$bg-button: $primary-accent;
+
+// Border Colors
+$border-main: #333333;
+$border-light: #666666;
+
+// Import color module for modern SASS
+@use "sass:color";
+
+// Interactive States
+$button-hover: color.adjust($primary-accent, $lightness: -10%);
+$button-active: color.adjust($primary-accent, $lightness: -15%);
+
+// Semantic Colors
+$success: #28a745;
+$warning: #ffc107;
+$error: #dc3545;
+$info: #17a2b8;
+
+// Opacity Variants
+$overlay-light: rgba(255, 255, 255, 0.1);
+$overlay-dark: rgba(0, 0, 0, 0.2);
+
+// Color Maps (for advanced usage)
+$theme-colors: (
+  "primary": $primary-cream,
+  "secondary": $primary-dark-green,
+  "accent": $primary-accent,
+  "text": $text-primary
+);
+
+$button-variants: (
+  "primary": $primary-accent,
+  "secondary": $primary-light-green,
+  "success": $success,
+  "warning": $warning,
+  "error": $error
+);

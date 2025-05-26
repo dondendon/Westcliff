@@ -1,0 +1,242 @@
+* {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+header, main, footer {
+  display: none;
+}
+
+body {
+  background-color: #d4c49a;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+}
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+}
+
+.left-column {
+  background-color: #6b7a5a;
+  width: 70%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  text-align: center;
+}
+.left-column::after {
+  content: "Sass stands for\aSyntactically Awesome\aStylesheet";
+  white-space: pre-line;
+  font-size: 2.2rem;
+  font-weight: normal;
+  line-height: 1.3;
+  color: #ffffff;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .left-column {
+    width: 100%;
+    height: 50vh;
+  }
+}
+
+.right-column {
+  background-color: #8a9472;
+  width: 30%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 2em;
+  box-sizing: border-box;
+}
+.right-column::before {
+  content: "What is\aSASS?";
+  white-space: pre-line;
+  font-size: 1.8rem;
+  color: #ffffff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.right-column .bottom-button {
+  background-color: #b8d632;
+  color: #4a5a3a;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  width: 8em;
+  height: 3em;
+  font-size: 1.1rem;
+  position: absolute;
+  bottom: 2em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.right-column .bottom-button:hover {
+  background-color: rgb(151.5243902439, 177.5, 35.5);
+  transform: translateY(-2px);
+}
+.right-column .bottom-button:active {
+  background-color: rgb(133.3841463415, 156.25, 31.25);
+  transform: translateY(0);
+}
+.right-column .bottom-button::after {
+  content: "Got It!";
+}
+.right-column .bottom-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.right-column .bottom-button:focus {
+  outline: 2px solid #b8d632;
+  outline-offset: 2px;
+}
+@media (max-width: 768px) {
+  .right-column {
+    width: 100%;
+    height: 50vh;
+  }
+  .right-column .bottom-button {
+    bottom: 1em;
+    width: 70%;
+  }
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 1;
+  pointer-events: none;
+}
+
+body::before {
+  content: "Sass stands for\aSyntactically Awesome\aStylesheet";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100vh;
+  background-color: #6b7a5a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  text-align: center;
+  white-space: pre-line;
+  font-size: 2.2rem;
+  font-weight: normal;
+  line-height: 1.3;
+  color: #ffffff;
+  z-index: 2;
+}
+
+body {
+  position: relative;
+}
+body::after {
+  content: "Got It!";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: translate(20%, 35%);
+  background-color: #b8d632;
+  color: #4a5a3a;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 0.8em 2em;
+  font-size: 1.1rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 6em;
+  height: 2.5em;
+  box-sizing: border-box;
+}
+body::after:hover {
+  background-color: rgb(151.5243902439, 177.5, 35.5);
+  transform: translateY(-2px);
+}
+body::after:active {
+  background-color: rgb(133.3841463415, 156.25, 31.25);
+  transform: translateY(0);
+}
+body::after:hover {
+  background-color: rgb(191.3597560976, 218.25, 71.25);
+  box-shadow: 0 2px 4px rgba(115.243902439, 135, 27, 0.3);
+}
+
+.bottom-button {
+  content: "Got It!";
+  position: fixed;
+  bottom: 2em;
+  right: 15%;
+  transform: translateX(50%);
+  background-color: #b8d632;
+  color: #4a5a3a;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 0.8em 2em;
+  font-size: 1.1rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 6em;
+  height: 2.5em;
+  box-sizing: border-box;
+}
+.bottom-button:hover {
+  background-color: rgb(151.5243902439, 177.5, 35.5);
+  transform: translateY(-2px);
+}
+.bottom-button:active {
+  background-color: rgb(133.3841463415, 156.25, 31.25);
+  transform: translateY(0);
+}
+.bottom-button::after {
+  content: "Got It!";
+}
+.bottom-button:hover {
+  background-color: rgb(191.3597560976, 218.25, 71.25);
+  box-shadow: 0 2px 4px rgba(115.243902439, 135, 27, 0.3);
+}
+@media (max-width: 768px) {
+  .bottom-button {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 1em;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

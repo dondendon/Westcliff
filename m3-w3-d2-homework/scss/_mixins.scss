@@ -1,0 +1,105 @@
+// ===================================
+// _MIXINS.SCSS - Reusable Mixins
+// ===================================
+
+// Import required modules
+@use "sass:color";
+@use "colors" as *;
+
+// Center content absolutely
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Flexbox centering
+@mixin flex-center($direction: row) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+}
+
+// Button styles
+@mixin button-base($bg-color: $bg-button, $text-color: $text-secondary) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: color.adjust($bg-color, $lightness: -10%);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    background-color: color.adjust($bg-color, $lightness: -15%);
+    transform: translateY(0);
+  }
+}
+
+// Section layout
+@mixin section-base($bg-color, $width: 100%) {
+  background-color: $bg-color;
+  height: 100%;
+  width: $width;
+  position: relative;
+  @include flex-center(column);
+  text-align: center;
+}
+
+// Typography mixins
+@mixin heading-large {
+  font-size: 2.2rem;
+  font-weight: normal;
+  line-height: 1.3;
+  color: $text-primary;
+}
+
+@mixin heading-medium {
+  font-size: 1.8rem;
+  color: $text-primary;
+}
+
+@mixin text-base {
+  font-size: 1.2rem;
+  color: $text-primary;
+}
+
+// Responsive breakpoints
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 769px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Container mixin
+@mixin container($width: 80%, $height: 500px) {
+  background-color: $bg-main;
+  border: 1px solid $border-main;
+  display: flex;
+  height: $height;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 1em;
+  width: $width;
+  gap: 1em;
+  box-sizing: border-box;
+}
