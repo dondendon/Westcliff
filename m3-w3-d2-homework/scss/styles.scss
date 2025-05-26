@@ -1,213 +1,68 @@
-// ===================================
-// STYLES.SCSS - Main Stylesheet
-// ===================================
+@import "colors.scss";
 
-// @use statements - modern SASS import system
-@use 'colors' as *;
-@use 'mixins' as *;
-@use "sass:color";
-
-// Variables (in addition to colors)
-$font-family-base: Arial, sans-serif;
-$border-radius-base: 15px;
-$transition-base: all 0.3s ease;
-$container-max-width: 900px;
-
-// Global styles with variables
-* {
-  @include text-base;
-  margin: 0;
-  padding: 0;
-}
-
-// Hide existing content (since HTML can't be modified)
-header, main, footer {
-  display: none;
-}
-
-body {
-  background-color: $bg-main;
-  font-family: $font-family-base;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
-  // Create full-bleed 2-column layout
-  display: flex;
-  
-  // Nesting - responsive behavior
-  @include mobile {
-    flex-direction: column;
-  }
-}
-
-// Full-bleed 2-column layout
-.left-column {
-  background-color: $bg-left-section;
-  width: 70%;
-  height: 100vh;
-  @include flex-center;
-  text-align: center;
-  
-  // Content text
-  &::after {
-    content: 'Sass stands for\ASyntactically Awesome\AStylesheet';
-    white-space: pre-line;
-    @include heading-large;
+@mixin center-vertically {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
     text-align: center;
-  }
-  
-  // Mobile responsive
-  @include mobile {
-    width: 100%;
-    height: 50vh;
-  }
 }
 
-.right-column {
-  background-color: $bg-right-section;
-  width: 30%;
-  height: 100vh;
-  position: relative;
-  @include flex-center(column);
-  text-align: center;
-  padding: 2em;
-  box-sizing: border-box;
-  
-  // Title text
-  &::before {
-    content: 'What is\ASASS?';
-    white-space: pre-line;
-    @include heading-medium;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  // Button at bottom center
-  .bottom-button {
-    @include button-base($bg-button, $text-secondary);
-    width: 8em;
-    height: 3em;
-    font-size: 1.1rem;
-    position: absolute;
-    bottom: 2em;
-    left: 50%;
-    transform: translateX(-50%);
-    
-    &::after {
-      content: 'Got It!';
-    }
-    
-    &:hover {
-      box-shadow: 0 4px 8px $overlay-dark;
-    }
-    
-    &:focus {
-      outline: 2px solid $primary-accent;
-      outline-offset: 2px;
-    }
-  }
-  
-  // Mobile responsive
-  @include mobile {
-    width: 100%;
-    height: 50vh;
-    
-    .bottom-button {
-      bottom: 1em;
-      width: 70%;
-    }
-  }
+//Global
+* {
+    color: $color4;
+    font-size: 1.2rem;
 }
 
-// Create the HTML structure using CSS (since HTML can't be modified)
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  z-index: 1;
-  pointer-events: none;
-}
+.container {
+    background-color: $color1;
+    border: 1px solid #000;
+    display: flex;
+    height: 500px;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 1em;
+    width: 50%;
 
-// Left column via pseudo-element
-body::before {
-  content: 'Sass stands for\ASyntactically Awesome\AStylesheet';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 70%;
-  height: 100vh;
-  background-color: $bg-left-section;
-  @include flex-center;
-  text-align: center;
-  white-space: pre-line;
-  @include heading-large;
-  z-index: 2;
-}
+    .left {
+        background-color: $color2;
+        height: 100%;
+        width: 69%;
+        position: relative;
 
-// Button implementation with variables and nesting
-body {
-  position: relative;
-  
-  // Nested pseudo-element for button
-  &::after {
-    content: 'Got It!';
-    @include center-absolute;
-    transform: translate(20%, 35%);
-    @include button-base($bg-button, $text-secondary);
-    padding: 0.8em 2em;
-    font-size: 1.1rem;
-    z-index: 3;
-    @include flex-center;
-    width: 6em;
-    height: 2.5em;
-    box-sizing: border-box;
-    
-    // Nested hover effect using color functions
-    &:hover {
-      background-color: lighten($bg-button, 5%);
-      box-shadow: 0 2px 4px rgba(darken($bg-button, 20%), 0.3);
+        p {
+          @include center-vertically;
+        }
     }
-  }
-}
 
-// Button at bottom center of right column
-.bottom-button {
-  content: 'Got It!';
-  position: fixed;
-  bottom: 2em;
-  right: 15%; // Center in 30% right column
-  transform: translateX(50%);
-  @include button-base($bg-button, $text-secondary);
-  padding: 0.8em 2em;
-  font-size: 1.1rem;
-  z-index: 3;
-  @include flex-center;
-  width: 6em;
-  height: 2.5em;
-  box-sizing: border-box;
-  
-  &::after {
-    content: 'Got It!';
-  }
-  
-  // Hover effect using modern color functions
-  &:hover {
-    background-color: color.adjust($bg-button, $lightness: 5%);
-    box-shadow: 0 2px 4px rgba(color.adjust($bg-button, $lightness: -20%), 0.3);
-  }
-  
-  // Mobile responsive
-  @include mobile {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 1em;
-  }
+    .right {
+        background-color: $color3;
+        height: 100%;
+        position: relative;
+        width: 29%;
+
+        p {
+          @include center-vertically;
+        }
+
+        .button {
+            background-color: $color5;
+            color: $color2;
+            border: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 7em;
+            height: 2.5em;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.5em 2em;
+
+            //this is to center content vertically
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -120%);
+        }
+    }
+
 }
