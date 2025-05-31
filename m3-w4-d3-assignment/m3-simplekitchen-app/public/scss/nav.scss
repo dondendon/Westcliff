@@ -1,0 +1,49 @@
+/* Nesting */
+
+
+/* SCSS */
+
+nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font: {
+        size: 1em;
+        font-weight: bold;
+    }
+    float: left;
+    div.nav-items-left {
+        ul {
+            list-style-type: none;
+            li {
+                float: left;
+                margin: 0 5px 0 0;
+                color: $color4;
+                a {
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                   }
+                   color: $color4;
+               }
+           }
+       }
+    }
+    div.nav-items-right {
+        ul {
+            list-style-type: none;
+            li {
+                float: right;
+                margin: 0 5px 0 0;
+                color: $color4;
+                a {
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                   }
+                   color: $color4;
+               }
+           }
+       }
+    }
+}
