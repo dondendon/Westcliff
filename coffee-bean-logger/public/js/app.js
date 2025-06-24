@@ -137,7 +137,7 @@ class CoffeeApp {
         container.innerHTML = cardsHTML;
     }
 
-    renderCoffeeBeanCard(bean) {
+renderCoffeeBeanCard(bean) {
     const dateAdded = new Date(bean.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -176,6 +176,54 @@ async addCoffeeBean(beanData) {
   } else {
     console.error('Add failed');
   }
+}
+
+
+
+async editCoffeeBean(beanId) {
+    try {
+        const response = await fetch(`/api/coffee-beans/${beanId}`, {
+            headers: {
+                'Authorization': `Bearer ${authManager.getToken()}`
+            }
+        });
+
+        if (response.ok) {
+            const bean = await response.json();
+            // Reuse the modalManager to show the edit modal
+            modalManager.showEditModal(bean);
+        } else {
+            const error = await response.json();
+            authManager.showAlert(error.message || 'Failed to load coffee bean', 'danger');
+        }
+    } catch (error) {
+        console.error('Edit fetch error:', error);
+        authManager.showAlert('Network error while loading coffee bean', 'danger');
+    }
+}
+
+async deleteCoffeeBean(beanId) {
+    try {
+        const response = await fetch(`/api/coffee-beans/${beanId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authManager.getToken()}`
+            }
+        });
+
+        if (response.ok) {
+            authManager.showAlert('Coffee bean deleted successfully!', 'success');
+            await this.loadCoffeeBeans(); // refresh the list
+        } else {
+            const error = await response.json();
+            authManager.showAlert(error.message || 'Failed to delete coffee bean', 'danger');
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        authManager.showAlert('Network error while deleting coffee bean', 'danger');
+    }
+}
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -318,99 +318,93 @@ class ModalManager {
         document.getElementById('coffeeNotes').value = coffeeBean.notes || '';
     }
 
-    async saveCoffeeBean() {
-        const coffeeId = document.getElementById('coffeeId').value;
-        const coffeeData = {
-            brand: document.getElementById('coffeeBrand').value,
-            origin: document.getElementById('coffeeOrigin').value,
-            price: parseFloat(document.getElementById('coffeePrice').value),
-            weight: {
-                value: parseFloat(document.getElementById('coffeeWeightValue').value),
-                unit: document.getElementById('coffeeWeightUnit').value
-            },
-            rating: parseInt(document.getElementById('coffeeRating').value),
-            flavorProfile: document.getElementById('coffeeFlavorProfile').value
-                .split(',')
-                .map(flavor => flavor.trim())
-                .filter(flavor => flavor.length > 0),
-            notes: document.getElementById('coffeeNotes').value
-        };
+async saveCoffeeBean() {
+    const coffeeId = document.getElementById('coffeeId').value;
+    const coffeeData = {
+        brand: document.getElementById('coffeeBrand').value,
+        origin: document.getElementById('coffeeOrigin').value,
+        price: parseFloat(document.getElementById('coffeePrice').value),
+        weight: {
+            value: parseFloat(document.getElementById('coffeeWeightValue').value),
+            unit: document.getElementById('coffeeWeightUnit').value
+        },
+        rating: parseInt(document.getElementById('coffeeRating').value),
+        flavorProfile: document.getElementById('coffeeFlavorProfile').value
+            .split(',')
+            .map(flavor => flavor.trim())
+            .filter(flavor => flavor.length > 0),
+        notes: document.getElementById('coffeeNotes').value
+    };
 
-        try {
-            const url = coffeeId ? `/api/coffee-beans/${coffeeId}` : '/api/coffee-beans';
-            const method = coffeeId ? 'PUT' : 'POST';
-            
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authManager.getToken()}`
-                },
-                body: JSON.stringify(coffeeData)
+    try {
+        const url = coffeeId ? `/api/coffee-beans/${coffeeId}` : '/api/coffee-beans';
+        const method = coffeeId ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authManager.getToken()}`
+            },
+            body: JSON.stringify(coffeeData)
+        });
+
+        if (response.ok) {
+            const message = coffeeId ? 'Coffee bean updated successfully!' : 'Coffee bean added successfully!';
+            authManager.showAlert(message, 'success');
+
+            // Hide modal and reset form
+            bootstrap.Modal.getInstance(document.getElementById('coffeeModal')).hide();
+            this.resetCoffeeForm();
+
+            // Wait until coffeeApp is ready, then reload beans
+            await new Promise((resolve) => {
+                const checkCoffeeApp = () => {
+                    if (window.coffeeApp && typeof window.coffeeApp.loadCoffeeBeans === 'function') {
+                        console.log('✅ coffeeApp found, reloading');
+                        resolve();
+                    } else {
+                        console.warn('⏳ Waiting for coffeeApp to be ready...');
+                        setTimeout(checkCoffeeApp, 50);
+                    }
+                };
+                checkCoffeeApp();
             });
 
-            if (response.ok) {
-    			const message = coffeeId ? 'Coffee bean updated successfully!' : 'Coffee bean added successfully!';
-    			authManager.showAlert(message, 'success');
-    			bootstrap.Modal.getInstance(document.getElementById('coffeeModal')).hide();
-    			this.resetCoffeeForm();
+            window.coffeeApp.loadCoffeeBeans();
 
-    
-/*
-
-    // 👇 Safely call coffeeApp
-    		if (window.coffeeApp && typeof window.coffeeApp.loadCoffeeBeans === 'function') {
-        			console.log('Calling coffeeApp.loadCoffeeBeans()');
-        			window.coffeeApp.loadCoffeeBeans();
-    			} else {
-        			console.warn('coffeeApp is not available yet');
-    			}
-			}
-			 else {
-                const error = await response.json();
-                authManager.showAlert(error.message || 'Failed to save coffee bean', 'danger');
-            }
-        } catch (error) {
-            console.error('Save error:', error);
-            authManager.showAlert('Network error. Please try again.', 'danger');
+        } else {
+            const error = await response.json();
+            authManager.showAlert(error.message || 'Failed to save coffee bean', 'danger');
         }
-    }*/
-    await new Promise((resolve) => {
-  		const checkCoffeeApp = () => {
-    		if (window.coffeeApp && typeof window.coffeeApp.loadCoffeeBeans === 'function') {
-      			console.log('✅ coffeeApp found, reloading');
-      			resolve();
-    		} else {
-      		console.warn('⏳ Waiting for coffeeApp to be ready...');
-      		setTimeout(checkCoffeeApp, 50);
-    		}
-  		};
-  	checkCoffeeApp();
-	});
-	window.coffeeApp.loadCoffeeBeans();
-
+    } catch (error) {
+        console.error('Save error:', error);
+        authManager.showAlert('Network error. Please try again.', 'danger');
+    }
+}
 
     async deleteCoffeeBean(coffeeId) {
-        try {
-            const response = await fetch(`/api/coffee-beans/${coffeeId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${authManager.getToken()}`
-                }
-            });
-
-            if (response.ok) {
-                authManager.showAlert('Coffee bean deleted successfully!', 'success');
-                window.coffeeApp.loadCoffeeBeans();
-            } else {
-                const error = await response.json();
-                authManager.showAlert(error.message || 'Failed to delete coffee bean', 'danger');
+    try {
+        const response = await fetch(`/api/coffee-beans/${coffeeId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authManager.getToken()}`
             }
-        } catch (error) {
-            console.error('Delete error:', error);
-            authManager.showAlert('Network error. Please try again.', 'danger');
+        });
+
+        if (response.ok) {
+            authManager.showAlert('Coffee bean deleted successfully!', 'success');
+            window.coffeeApp.loadCoffeeBeans();
+        } else {
+            const error = await response.json();
+            authManager.showAlert(error.message || 'Failed to delete coffee bean', 'danger');
         }
+    } catch (error) {
+        console.error('Delete error:', error);
+        authManager.showAlert('Network error. Please try again.', 'danger');
     }
+}
+
 
     generateStars(rating) {
         let stars = '';
