@@ -1,0 +1,115 @@
+:root {
+    --coffee-brown: #3C2415;
+    --coffee-cream: #F5E6D3;
+    --coffee-gold: #D4941E;
+    --coffee-light: #FEFCF8;
+    --coffee-text: #2D1B11;
+}
+
+body {
+    background-color: var(--coffee-light);
+    color: var(--coffee-text);
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--coffee-gold) !important;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    background: white;
+}
+
+.coffee-card {
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 1.5rem;
+}
+
+.coffee-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.rating-stars {
+    color: var(--coffee-gold);
+}
+
+.flavor-tag {
+    background-color: var(--coffee-cream);
+    color: var(--coffee-brown);
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin: 0.1rem;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--coffee-brown);
+    border-color: var(--coffee-brown);
+}
+
+.btn-primary:hover {
+    background-color: #2d1a0f;
+    border-color: #2d1a0f;
+}
+
+.btn-outline-primary {
+    color: var(--coffee-brown);
+    border-color: var(--coffee-brown);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--coffee-brown);
+    border-color: var(--coffee-brown);
+}
+
+.form-control:focus {
+    border-color: var(--coffee-gold);
+    box-shadow: 0 0 0 0.2rem rgba(212, 148, 30, 0.25);
+}
+
+.modal-header {
+    background-color: var(--coffee-brown);
+    color: white;
+    border-bottom: none;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.coffee-bean-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .d-flex.gap-2 {
+        flex-direction: column;
+    }
+    
+    .d-flex.gap-2 > * {
+        margin-bottom: 0.5rem;
+    }
+}
