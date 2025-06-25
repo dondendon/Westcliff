@@ -48,6 +48,9 @@ class CoffeeApp {
                 this.applyFilters();
             });
         }
+        document.getElementById('sortBy').addEventListener('change', (e) => {
+            console.log('Sorting by:', e.target.value);
+        });
     }
 
     async loadCoffeeBeans() {
@@ -223,8 +226,17 @@ async deleteCoffeeBean(beanId) {
         authManager.showAlert('Network error while deleting coffee bean', 'danger');
     }
 }
+renderEmptyState() {
+    return `
+        <div class="no-results text-center p-4">
+            <p>No results found.</p>
+        </div>
+    `;
+}
 
 }
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   window.coffeeApp = new CoffeeApp();
