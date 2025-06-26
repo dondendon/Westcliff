@@ -149,7 +149,11 @@ renderCoffeeBeanCard(bean) {
 
     return `
       <div class="coffee-card">
-        <h5>${bean.brand}</h5>
+        ${bean.imageUrl 
+            ? `<img src="${bean.imageUrl}" alt="${bean.brand}" class="coffee-img mb-2">` 
+            : `<div class="coffee-img-placeholder">No image available</div>`
+        }
+        <p><strong>Brand:</strong> ${bean.brand || 'Unknown'}</p>
         <p><strong>Origin:</strong> ${bean.origin || 'Unknown'}</p>
         <p><strong>Flavors:</strong> ${bean.flavorProfile.join(', ')}</p>
         <p><strong>Rating:</strong> ${bean.rating}/5</p>
@@ -234,6 +238,9 @@ renderEmptyState() {
     `;
 }
 
+
+
+
 }
 
 
@@ -241,3 +248,4 @@ renderEmptyState() {
 document.addEventListener('DOMContentLoaded', () => {
   window.coffeeApp = new CoffeeApp();
 });
+

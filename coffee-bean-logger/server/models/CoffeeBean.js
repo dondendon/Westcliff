@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+
+
+
 const coffeeBeanSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -48,9 +51,13 @@ const coffeeBeanSchema = new mongoose.Schema({
     type: String,
     trim: true,
     default: ''
-  }
-}, {
-  timestamps: true
+  },
+imageUrl: {
+  type: String
+  },
+  timestamps: {
+  type: Date, default: Date.now
+}
 });
 
 // Index for search functionality

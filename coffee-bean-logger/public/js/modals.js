@@ -86,6 +86,11 @@ class ModalManager {
                         <div class="modal-body">
                             <form id="coffeeForm">
                                 <input type="hidden" id="coffeeId">
+            <div class="mb-3">
+  <label for="coffeeImage" class="form-label">Image</label>
+  <input type="file" class="form-control" id="coffeeImage" accept="image/*">
+</div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -320,6 +325,9 @@ class ModalManager {
 
 async saveCoffeeBean() {
     const coffeeId = document.getElementById('coffeeId').value;
+    const imageInput = document.getElementById('coffeeImage');
+    const imageFile = imageInput && imageInput.files.length > 0 ? imageInput.files[0] : null;
+
     const coffeeData = {
         brand: document.getElementById('coffeeBrand').value,
         origin: document.getElementById('coffeeOrigin').value,
@@ -336,6 +344,36 @@ async saveCoffeeBean() {
         notes: document.getElementById('coffeeNotes').value
     };
 
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(coffeeData));
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
+
+//new
+        const url = coffeeId ? `/api/coffee-beans/${coffeeId}` : '/api/coffee-beans';
+        const method = coffeeId ? 'PUT' : 'POST';
+
+        const submitBtn = document.getElementById('coffeeSubmitBtn');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Saving...';
+
+        try {
+            const token = window.authManager ? window.authManager.getToken() : null;
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(url, {
+                method,
+                headers,
+                body: formData
+            });
+
+
+/* pre claud
     try {
         const url = coffeeId ? `/api/coffee-beans/${coffeeId}` : '/api/coffee-beans';
         const method = coffeeId ? 'PUT' : 'POST';
@@ -343,11 +381,13 @@ async saveCoffeeBean() {
         const response = await fetch(url, {
             method: method,
             headers: {
-                'Content-Type': 'application/json',
+                //'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authManager.getToken()}`
             },
-            body: JSON.stringify(coffeeData)
-        });
+            //body: JSON.stringify(coffeeData)
+            body: formData
+
+        });*/
 
         if (response.ok) {
             const message = coffeeId ? 'Coffee bean updated successfully!' : 'Coffee bean added successfully!';

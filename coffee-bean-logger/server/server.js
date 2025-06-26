@@ -10,8 +10,11 @@ const path = require('path');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
 const coffeeBeanRoutes = require('./routes/coffeeBeans');
-
+//app.use(coffeeBeanRoutes);
 const app = express();
+
+
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 // Connect to database
 connectDB();
@@ -59,7 +62,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/coffee-beans', coffeeBeanRoutes);
+app.use('/api/coffee-beans', require('./routes/coffeebeans'));
 
 // Serve main page
 app.get('/', (req, res) => {
