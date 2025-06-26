@@ -1,4 +1,4 @@
-// Main application logic
+// Main application
 class CoffeeApp {
     constructor() {
         this.coffeeBeans = [];
@@ -141,26 +141,48 @@ class CoffeeApp {
     }
 
 renderCoffeeBeanCard(bean) {
-    const dateAdded = new Date(bean.createdAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-
+    let dateAdded = 'Unknown';
+    if (bean.createdAt) {
+        const parsedDate = new Date(bean.createdAt);
+        if (!isNaN(parsedDate.getTime())) {
+            dateAdded = parsedDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+    }
     return `
-      <div class="coffee-card">
+      <div class="coffee-card position-relative">
+        <!-- Dropdown menu button at top right -->
+        <div class="dropdown position-absolute top-0 end-0 m-2">
+          <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="#" onclick="coffeeApp.editCoffeeBean('${bean._id}')">
+                <i class="fas fa-edit me-2"></i> Edit
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="#" onclick="coffeeApp.deleteCoffeeBean('${bean._id}')">
+                <i class="fas fa-trash me-2"></i> Delete
+              </a>
+            </li>
+          </ul>
+        </div>
+
         ${bean.imageUrl 
             ? `<img src="${bean.imageUrl}" alt="${bean.brand}" class="coffee-img mb-2">` 
             : `<div class="coffee-img-placeholder">No image available</div>`
         }
-        <p><strong>Brand:</strong> ${bean.brand || 'Unknown'}</p>
+        <h2><strong>${bean.brand || 'Unknown'}</strong></h2>
         <p><strong>Origin:</strong> ${bean.origin || 'Unknown'}</p>
         <p><strong>Flavors:</strong> ${bean.flavorProfile.join(', ')}</p>
         <p><strong>Rating:</strong> ${bean.rating}/5</p>
         <p><strong>Price:</strong> $${bean.price}</p>
         <p><strong>Added:</strong> ${dateAdded}</p>
-        <button onclick="coffeeApp.editCoffeeBean('${bean._id}')">Edit</button>
-        <button onclick="coffeeApp.deleteCoffeeBean('${bean._id}')">Delete</button>
       </div>
     `;
 }

@@ -52,12 +52,11 @@ const coffeeBeanSchema = new mongoose.Schema({
     trim: true,
     default: ''
   },
-imageUrl: {
-  type: String
-  },
-  timestamps: {
-  type: Date, default: Date.now
-}
+  imageUrl: {
+    type: String
+  }
+}, {
+  timestamps: true
 });
 
 // Index for search functionality

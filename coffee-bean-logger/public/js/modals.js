@@ -177,6 +177,7 @@ class ModalManager {
                             <button type="button" class="btn btn-primary" id="editCoffeeBtn">Edit</button>
                             <button type="button" class="btn btn-danger" id="deleteCoffeeBtn">Delete</button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -265,6 +266,8 @@ class ModalManager {
         const modal = new bootstrap.Modal(document.getElementById('coffeeModal'));
         modal.show();
     }
+
+
 
     showViewModal(coffeeBean) {
         this.currentViewingCoffee = coffeeBean;

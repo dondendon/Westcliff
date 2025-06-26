@@ -96,43 +96,70 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: 'Failed to save coffee bean', error });
   }
 });
-
-
-
-/*
-// Create coffee bean
-router.post('/', auth, async (req, res) => {
+/*old put
+router.put('/:id', requireAuth, upload.single('image'), async (req, res) => {
   try {
-    const coffeeBean = new CoffeeBean({
-      ...req.body,
-      userId: req.user._id
+    const { data } = req.body;
+    const coffeeData = JSON.parse(data);
+    const { id } = req.params;
+
+    // Add userId
+    coffeeData.userId = req.user._id;
+
+    // If new image is uploaded
+    if (req.file) {
+      coffeeData.imageUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedBean = await CoffeeBean.findByIdAndUpdate(id, coffeeData, {
+      new: true,
+      runValidators: true
     });
 
-    await coffeeBean.save();
-    res.status(201).json(coffeeBean);
-  } catch (error) {
-    res.status(400).json({ message: 'Validation error', error: error.message });
-  }
-});
-*/
-// Update coffee bean
-router.put('/:id', auth, async (req, res) => {
-  try {
-    const coffeeBean = await CoffeeBean.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user._id },
-      req.body,
-      { new: true, runValidators: true }
-    );
-
-    if (!coffeeBean) {
+    if (!updatedBean) {
       return res.status(404).json({ message: 'Coffee bean not found' });
     }
 
-    res.json(coffeeBean);
-  } catch (error) {
-    res.status(400).json({ message: 'Update error', error: error.message });
+    res.json(updatedBean);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Update failed', error: err.message });
+  }
+});*/
+
+
+router.put('/:id', requireAuth, upload.single('image'), async (req, res) => {
+  try {
+    const { data } = req.body;
+    const coffeeData = JSON.parse(data);
+    const { id } = req.params;
+
+    // Add userId for security
+    coffeeData.userId = req.user._id;
+
+    // Get existing bean so we can preserve imageUrl if needed
+    const existingBean = await CoffeeBean.findOne({ _id: id, userId: req.user._id });
+    if (!existingBean) {
+      return res.status(404).json({ message: 'Coffee bean not found' });
+    }
+
+    // If new image is uploaded, set it. Otherwise, preserve existing.
+    coffeeData.imageUrl = req.file
+      ? `/uploads/${req.file.filename}`
+      : existingBean.imageUrl;
+
+    const updatedBean = await CoffeeBean.findByIdAndUpdate(id, coffeeData, {
+      new: true,
+      runValidators: true
+    });
+
+    res.json(updatedBean);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Update failed', error: err.message });
   }
 });
+
 
 // Delete coffee bean
 router.delete('/:id', auth, async (req, res) => {

@@ -15,6 +15,12 @@ body {
 .navbar-brand {
     font-weight: bold;
     color: var(--coffee-gold) !important;
+    //color: #1E0F04;
+    font-family: "Crete Round";
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .card {
@@ -25,14 +31,20 @@ body {
 }
 
 .coffee-card {
-    transition: transform 0.2s ease-in-out;
-    margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0px;
+  overflow: hidden; /* Ensures images or content never overflow the card */
+  background-color: white;
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s;
+  padding: 16px;
 }
 
+
 .coffee-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 
 .rating-stars {
     color: var(--coffee-gold);
@@ -114,17 +126,40 @@ body {
     }
 }
 
+.coffee-img,
 .coffee-img-placeholder {
   width: 100%;
-  height: 180px;
-  background-color: #f2f2f2; /* Light gray background */
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.coffee-img-placeholder {
+  background-color: #f2f2f2;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #aaa; /* Muted text color */
+  color: #aaa;
   font-size: 0.9rem;
   font-style: italic;
-  border: 1px dashed #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
 }
+
+.coffee-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 per row at min 300px */
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+h2{
+   color: #000;
+font-family: "Crete Round";
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 150%; 
+}
+
