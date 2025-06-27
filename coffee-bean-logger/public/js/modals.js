@@ -131,14 +131,14 @@ class ModalManager {
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="coffeeRating" class="form-label">Rating *</label>
-                                    <select class="form-select" id="coffeeRating" required>
-                                        <option value="">Select rating...</option>
-                                        <option value="1">1 Star</option>
-                                        <option value="2">2 Stars</option>
-                                        <option value="3">3 Stars</option>
-                                        <option value="4">4 Stars</option>
-                                        <option value="5">5 Stars</option>
+                                    <label for="coffeeRoastLevel" class="form-label">Roast Level *</label>
+                                    <select class="form-select" id="coffeeRoastLevel" required>
+                                        <option value="">Select roasted level...</option>
+                                        <option value="1">1 (Light)</option>
+                                        <option value="2">2 (Light-Mid)</option>
+                                        <option value="3">3 (Mid)</option>
+                                        <option value="4">4 (Mid-Dark)</option>
+                                        <option value="5">5 (Dark roasted)</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -321,7 +321,7 @@ class ModalManager {
         document.getElementById('coffeePrice').value = coffeeBean.price;
         document.getElementById('coffeeWeightValue').value = coffeeBean.weight.value;
         document.getElementById('coffeeWeightUnit').value = coffeeBean.weight.unit;
-        document.getElementById('coffeeRating').value = coffeeBean.rating;
+        document.getElementById('coffeeRoastLevel').value = coffeeBean.rating;
         document.getElementById('coffeeFlavorProfile').value = coffeeBean.flavorProfile ? coffeeBean.flavorProfile.join(', ') : '';
         document.getElementById('coffeeNotes').value = coffeeBean.notes || '';
     }
@@ -339,7 +339,7 @@ async saveCoffeeBean() {
             value: parseFloat(document.getElementById('coffeeWeightValue').value),
             unit: document.getElementById('coffeeWeightUnit').value
         },
-        rating: parseInt(document.getElementById('coffeeRating').value),
+        rating: parseInt(document.getElementById('coffeeRoastLevel').value),
         flavorProfile: document.getElementById('coffeeFlavorProfile').value
             .split(',')
             .map(flavor => flavor.trim())

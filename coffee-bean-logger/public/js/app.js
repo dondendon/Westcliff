@@ -177,12 +177,12 @@ renderCoffeeBeanCard(bean) {
             ? `<img src="${bean.imageUrl}" alt="${bean.brand}" class="coffee-img mb-2">` 
             : `<div class="coffee-img-placeholder">No image available</div>`
         }
-        <h2><strong>${bean.brand || 'Unknown'}</strong></h2>
-        <p><strong>Origin:</strong> ${bean.origin || 'Unknown'}</p>
-        <p><strong>Flavors:</strong> ${bean.flavorProfile.join(', ')}</p>
-        <p><strong>Rating:</strong> ${bean.rating}/5</p>
-        <p><strong>Price:</strong> $${bean.price}</p>
-        <p><strong>Added:</strong> ${dateAdded}</p>
+        <h1>${bean.brand || 'Unknown'}</h1>
+        <h2>Originally from <strong> ${bean.origin || 'Unknown'}</strong></h2>
+        <h2>With roasted level <strong> ${bean.rating}/5 </strong></h2>
+        <h2>Costs <strong>$${bean.price || 'Unknown'}</strong></h2>
+        <h2>With <strong>${bean.flavorProfile.join(', ') || 'Unknown'}</strong> flavors </h2>
+        <h3> logged in ${dateAdded}</h3>
       </div>
     `;
 }
