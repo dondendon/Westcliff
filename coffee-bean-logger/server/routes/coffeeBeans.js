@@ -96,36 +96,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: 'Failed to save coffee bean', error });
   }
 });
-/*old put
-router.put('/:id', requireAuth, upload.single('image'), async (req, res) => {
-  try {
-    const { data } = req.body;
-    const coffeeData = JSON.parse(data);
-    const { id } = req.params;
 
-    // Add userId
-    coffeeData.userId = req.user._id;
-
-    // If new image is uploaded
-    if (req.file) {
-      coffeeData.imageUrl = `/uploads/${req.file.filename}`;
-    }
-
-    const updatedBean = await CoffeeBean.findByIdAndUpdate(id, coffeeData, {
-      new: true,
-      runValidators: true
-    });
-
-    if (!updatedBean) {
-      return res.status(404).json({ message: 'Coffee bean not found' });
-    }
-
-    res.json(updatedBean);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Update failed', error: err.message });
-  }
-});*/
 
 
 router.put('/:id', requireAuth, upload.single('image'), async (req, res) => {
